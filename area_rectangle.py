@@ -11,7 +11,7 @@ window = tk.Tk()
 window.title('โปรแกรมคำนวณพื้นที่')
 window.minsize(width=400,height=400)
 
-title_label = tk.Label(master=window,text='คำนวณหาพื้นที่')
+title_label = tk.Label(master=window,text='คำนวณหาพื้นที่สี่เหลี่ยมผืนผ้า')
 title_label.grid(row=0,column=1,padx=10,pady=5)
 
 # กว้าง
