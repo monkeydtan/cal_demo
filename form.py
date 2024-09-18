@@ -1,9 +1,17 @@
 import tkinter as tk
 from tkinter import messagebox
+from PIL import Image, ImageTk
 
 app = tk.Tk()
 app.title("กรอกชื่อ")
 app.geometry("300x200")
+
+
+# รูปตา
+eyes_view = Image.open("pic/view.png") #ดึงรูปเข้ามา เก็บไว้ที่ตัวแปร eyes_view
+eyes_view_img = ImageTk.PhotoImage(eyes_view)
+eyes_hide = Image.open("pic/hide.png") 
+eyes_hide_img = ImageTk.PhotoImage(eyes_hide)
 
 # กรอบใหญ่
 frame_window = tk.Frame(app)
@@ -26,6 +34,25 @@ lname.grid(row=2,column=0)
 
 entry_lname = tk.Entry(frame_window,bd=2,show="*")
 entry_lname.grid(row=2,column=1,pady=5)
+
+# ฟังก์ชัน toggle
+# เรากำลังประกาศตัวแปรนี้นอกฟังก์ชัน => ตัวแปรนี้อยู่ใน global scope หมายถึง ตัวแปรนี้มีอยู่ในระดับทั่วทั้งโปรแกรม
+show_password = False # สร้างตัวแปรขึ้นว่า ตอนนี้มันกำลังโชว์รหัสผ่านไหม ซึ่งก็คือ ไม่ (โชว์ * อยู่)
+
+def view_and_hide():
+    global show_password
+    if show_password:
+        entry_lname.config(show="*")  #เป็น default เท่ากับว่า * คือ false / ตัวเลข คือ True
+        icon_eye.config(image=eyes_view_img) # default คือ eye view
+        show_password = False
+    else:
+        entry_lname.config(show="")
+        icon_eye.config(image=eyes_hide_img)
+        show_password = True
+    
+    
+icon_eye = tk.Button(frame_window,image=eyes_view_img,width=13,height=13,command=view_and_hide)
+icon_eye.grid(row=2,column=2)
 
 # ฟังก์ชันการกดปุ่ม login
 def user_id():
