@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
+from regis_page import open_regis_page
 
 app = tk.Tk()
 app.title("กรอกชื่อ")
-app.geometry("300x200")
+app.geometry("300x300")
 
 
 # รูปตา
@@ -35,6 +36,28 @@ lname.grid(row=2,column=0)
 entry_lname = tk.Entry(frame_window,bd=2,show="*")
 entry_lname.grid(row=2,column=1,pady=5)
 
+def on_click(event):
+    print("Click this!")
+
+def cursor_on(event):
+    #event.widget.config(font=('Arial', 10, 'underline'))
+    forget_pw.config(font=('Arial', 10, 'underline'))
+    
+    
+def cursor_leave(event):
+    #event.widget.config(font=('Arial', 10))
+    forget_pw.config(font=('Arial', 10))
+    
+    
+# สร้างปุ่มข้อความ
+forget_pw = tk.Button(frame_window,text="ลืมรหัสผ่าน",bd=0,cursor="hand2",fg='blue', font=('Arial', 10))
+forget_pw.grid(row=3,column=1,columnspan=2,sticky="e",padx=(0,20))
+
+# จับ event ตอนวางเม้าส์
+forget_pw.bind("<Enter>",cursor_on)
+forget_pw.bind("<Leave>",cursor_leave)
+forget_pw.bind("<Button-1>",on_click)
+
 # ฟังก์ชัน toggle
 # เรากำลังประกาศตัวแปรนี้นอกฟังก์ชัน => ตัวแปรนี้อยู่ใน global scope หมายถึง ตัวแปรนี้มีอยู่ในระดับทั่วทั้งโปรแกรม
 show_password = False # สร้างตัวแปรขึ้นว่า ตอนนี้มันกำลังโชว์รหัสผ่านไหม ซึ่งก็คือ ไม่ (โชว์ * อยู่)
@@ -63,17 +86,23 @@ def user_id():
     else:
         messagebox.showinfo("เข้าสู่ระบบสำเร็จ","Login Successful ! \nWelcome "+str_name)
 
-    
+
+# สร้างหน้าต่างใหม่
+def new_window_regis():
+    open_regis_page()
+
+
 # กรอบย่อยสำหรับปุ่ม
 sub_btn_frame = tk.Frame(frame_window)
-sub_btn_frame.grid(row=3,column=1)
+sub_btn_frame.grid(row=4,column=1)
 
 # ปุ่ม Login
 submit_btn = tk.Button(sub_btn_frame,text="Login",command=user_id)
-submit_btn.grid(row=0,column=0,sticky="e",padx=(0,10)) # sticky e คือ ชิดขอบขวา / w คือ ชิดขอบซ้าย
+submit_btn.grid(row=0,column=0,sticky="w",padx=(0,10)) # sticky e คือ ชิดขอบขวา / w คือ ชิดขอบซ้าย
 # ปุ่ม Register
-regis_btn = tk.Button(sub_btn_frame,text="Register") #command คือมันจะไปหน้าใหม่ (เพิ่ม delay)
+regis_btn = tk.Button(sub_btn_frame,text="Register",command=new_window_regis) #command คือมันจะไปหน้าใหม่ (เพิ่ม delay)
 regis_btn.grid(row=0,column=1)
+
 
 
 app.mainloop()
